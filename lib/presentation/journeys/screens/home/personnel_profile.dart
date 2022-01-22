@@ -67,7 +67,6 @@ class _PersonnelProfileViewState extends State<PersonnelProfileView> with Single
     Size size = MediaQuery.of(context).size;
 
     var heroTag = widget.serviceModel.name[0] + widget.serviceModel.perHour;
-    print('heroTag in view is:\t$heroTag');
 
     return SafeArea(
       child: Scaffold(
