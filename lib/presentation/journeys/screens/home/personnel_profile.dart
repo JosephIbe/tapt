@@ -41,12 +41,23 @@ class _PersonnelProfileViewState extends State<PersonnelProfileView> with Single
     duration: const Duration(milliseconds: animationDuration)
   );
 
-  late Animation<Offset> slideUpAnimation;
+  late Animation<Offset> slideUpAnimation, delayedSlideUpAnimation;
 
   @override
   void initState() {
     animationController.forward();
-    slideUpAnimation = Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0)).animate(animationController);
+    slideUpAnimation = Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0))
+        .animate(CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeInOut
+      )
+    );
+    delayedSlideUpAnimation = Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0))
+        .animate(CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.7, 1.0, curve: Curves.easeIn)
+      )
+    );
     super.initState();
   }
 
@@ -194,75 +205,84 @@ class _PersonnelProfileViewState extends State<PersonnelProfileView> with Single
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Container(
-                  height: 100.0,
-                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0,),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Price',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w700
-                            ),
-                          ),
-                          RichText(
-                            text: const TextSpan(
-                              text: '\$20',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30.0,
-                                fontWeight: FontWeight.w700
-                              ),
+                child: FadeTransition(
+                  opacity: animationController,
+                  child: Container(
+                      height: 100.0,
+                      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0,),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0),
+                        ),
+                      ),
+                      child: SlideTransition(
+                        position: delayedSlideUpAnimation,
+                        child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                TextSpan(
-                                  text: '/hour',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w700
+                                Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Price',
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                      RichText(
+                                        text: const TextSpan(
+                                            text: '\$20',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 30.0,
+                                                fontWeight: FontWeight.w700
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: '/hour',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18.0,
+                                                    fontWeight: FontWeight.w700
+                                                ),
+                                              )
+                                            ]
+                                        ),
+                                      )
+                                    ]
+                                ),
+                                Container(
+                                  height: 60.0,
+                                  width: size.width * 0.4,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                                      color: Theme.of(context).primaryColor
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                        'Hire now',
+                                        style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w900
+                                          ),
+                                        ),
+                                      )
                                   ),
                                 )
                               ]
-                            ),
                           )
-                        ]
-                      ),
-                      Container(
-                        height: 60.0,
-                        width: size.width * 0.4,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                            color: Theme.of(context).primaryColor
-                        ),
-                        child: Center(
-                            child: Text(
-                              'Hire now',
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w900
-                                ),
-                              ),
-                            )
-                        ),
                       )
-                    ]
                   )
+                ),
                 )
-              )
             ]
           )
         )

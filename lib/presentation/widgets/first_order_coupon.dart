@@ -49,30 +49,30 @@ class _FirstOrderCouponState extends State<FirstOrderCoupon> with SingleTickerPr
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          '20% OFF',
-                          style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 22.0,
-                                letterSpacing: 1.5,
-                              )
-                          )
-                      ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                          'for the first order',
-                          style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              )
-                          )
-                      ),
-                      const SizedBox(height: 5.0),
-                      ElevatedButton(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '20% OFF',
+                       style: GoogleFonts.poppins(
+                         textStyle: const TextStyle(
+                           color: Colors.white,
+                           fontSize: 20.0,
+                           letterSpacing: 1.5,
+                         )
+                       )
+                     ),
+                     const SizedBox(height: 10.0),
+                     Text(
+                       'for the first order',
+                       style: GoogleFonts.poppins(
+                         textStyle: const TextStyle(
+                           color: Colors.white,
+                           fontSize: 16.0,
+                       )
+                      )
+                    ),
+                    const SizedBox(height: 5.0),
+                    ElevatedButton(
                         onPressed: ()=> {},
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -89,7 +89,7 @@ class _FirstOrderCouponState extends State<FirstOrderCoupon> with SingleTickerPr
                             )
                         ),
                       )
-                    ]
+                  ]
                 ),
               ),
             ),
@@ -97,7 +97,15 @@ class _FirstOrderCouponState extends State<FirstOrderCoupon> with SingleTickerPr
                 flex: 1,
                 child: SlideTransition(
                   position: slideUpAnimation,
-                  child: Image.asset('assets/images/drake.jpg',),
+                  child: const Padding(
+                    padding: EdgeInsets.only(right: 15.0, bottom: 15.0),
+                    child: Image(
+                      width: 100.0,
+                      height: 950.0,
+                      image: AssetImage('assets/images/drake.jpg',),
+                      // fit: BoxFit.fitHeight,
+                    ),
+                  )
                 )
             )
           ]

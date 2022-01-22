@@ -42,7 +42,15 @@ class _CategoryItemState extends State<CategoryItem> with SingleTickerProviderSt
             ),
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                color: Colors.white
+                color: Colors.white,
+                // boxShadow: [
+                //   BoxShadow(
+                //       color: Colors.blueGrey,
+                //       blurRadius: 5,
+                //       spreadRadius: 1,
+                //       offset: Offset(0, 0)
+                //   )
+                // ]
             ),
             padding: const EdgeInsets.all(5.0),
             child: Column(

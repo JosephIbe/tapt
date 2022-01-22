@@ -152,7 +152,7 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                     /**
                      *  Miscellaneous Widgets
                      * */
-                    const SizedBox(height: 17.0,),
+                    const SizedBox(height: 10.0,),
                     TweenAnimationBuilder<double>(
                       tween: Tween(begin: 1.0, end: 0.0),
                       duration: const Duration(milliseconds: animationDuration),
@@ -160,8 +160,9 @@ class _HomeViewState extends State<HomeView> with SingleTickerProviderStateMixin
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const FirstOrderCoupon(),
-                          const SizedBox(height: 12.0,),
+                          const SizedBox(height: 10.0,),
                           SearchBox(),
+                          const SizedBox(height: 10.0,),
                           const DynamicText(title: 'Categories', fontSize: 22.0),
                         ]
                       ),
