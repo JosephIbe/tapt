@@ -11,6 +11,7 @@ import 'package:flutter_app/data/models/service_personnel.dart';
 import 'package:flutter_app/presentation/widgets/app_bar_icon.dart';
 import 'package:flutter_app/presentation/widgets/dynamic_text.dart';
 import 'package:flutter_app/presentation/widgets/rating_chips.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -169,12 +170,23 @@ class _PersonnelProfileViewState extends State<PersonnelProfileView> with Single
                                   constraints: const BoxConstraints(
                                     maxHeight: 50.0,
                                   ),
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: skills.length,
-                                    itemBuilder: (context, index) => RatingChips(
-                                        ratingsModel: skills[index]
+                                  child: AnimationLimiter(
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: skills.length,
+                                        itemBuilder: (context, index){
+                                          return AnimationConfiguration.staggeredList(
+                                            position: index,
+                                            duration: const Duration(milliseconds: 375),
+                                            child: SlideAnimation(
+                                              horizontalOffset: 500.0,
+                                              child: RatingChips(
+                                                ratingsModel: skills[index],
+                                              ),
+                                            ),
+                                          );
+                                        }
                                     ),
                                   ),
                                 ),

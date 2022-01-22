@@ -12,6 +12,7 @@ import 'package:flutter_app/presentation/widgets/rating_chips.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class CategoryDetailsView extends StatefulWidget {
 
@@ -71,11 +72,43 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> with SingleTi
   ];
 
   static const animationDuration = 1800;
-  late final animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: animationDuration));
+  late final animationController = AnimationController(
+    vsync: this, duration:
+    const Duration(milliseconds: animationDuration)
+  );
+
+  final listItems = [];
+  final listKey = GlobalKey<AnimatedListState>();
+
+  // void addItemsToAnimatedList() {
+  //
+  //   final ratingWidgets = [
+  //     const RatingChips(title: 'High rating', icon: Icons.star),
+  //     const RatingChips(title: 'Verified', icon: Icons.verified),
+  //     const RatingChips(title: 'Up to date', icon: Icons.star),
+  //     const RatingChips(title: 'High rating', icon: Icons.verified),
+  //     const RatingChips(title: 'Verified', icon: Icons.star),
+  //     const RatingChips(title: 'Up to date', icon: Icons.verified),
+  //   ];
+  //
+  //   var future = Future(() {});
+  //   for(var i = 0; i < ratingWidgets.length; i++) {
+  //     future = future.then((_){
+  //       return Future.delayed(
+  //           const Duration(milliseconds:1500,), (){
+  //             listItems.add(ratingWidgets[i]);
+  //             listKey.currentState!.insertItem(ratingWidgets.length - 1);
+  //           }
+  //         );
+  //       }
+  //     );
+  //   }
+  // }
 
   @override
   void initState() {
     animationController.forward();
+    // addItemsToAnimatedList();
     super.initState();
   }
 
@@ -187,15 +220,48 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> with SingleTi
                     constraints: const BoxConstraints(
                       maxHeight: 50.0,
                     ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: ratings.length,
-                      padding: const EdgeInsets.only(right: 10.0),
-                      itemBuilder: (context, index, ) => RatingChips(
-                        ratingsModel: ratings[index],
+                    child: AnimationLimiter(
+                      child: ListView.builder(
+                        itemCount: ratings.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index){
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              horizontalOffset: 500.0,
+                              child: RatingChips(ratingsModel: ratings[index],),
+                            ),
+                          );
+                        }
                       ),
-                    ),
+                    )
+                    // child: AnimatedList(
+                    //   key: listKey,
+                    //   initialItemCount: listItems.length,
+                    //   itemBuilder: (context, index, animation) {
+                    //     print(listItems[index]);
+                    //     return SlideTransition(
+                    //       position: CurvedAnimation(
+                    //         curve: Curves.easeInOut,
+                    //         parent: animation,
+                    //       ).drive((Tween<Offset>(
+                    //         begin: const Offset(1, 0),
+                    //         end: const Offset(0, 0),
+                    //       ))),
+                    //       child: listItems[index],
+                    //     );
+                    //   },
+                    // ),
+                    // child: ListView.builder(
+                    //   shrinkWrap: true,
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: ratings.length,
+                    //   padding: const EdgeInsets.only(right: 10.0),
+                    //   itemBuilder: (context, index, ) => RatingChips(
+                    //     ratingsModel: ratings[index],
+                    //   ),
+                    // ),
                   ),
 
                   const SizedBox(height: 10.0),
@@ -220,24 +286,33 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> with SingleTi
                       maxHeight: 200.0,
                       maxWidth: size.width
                     ),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: servicesPersonnel.length,
-                      itemBuilder: (context, index) {
-                        var service = servicesPersonnel[index];
-                        return PersonnelCard(
-                          model: ServicePersonnelModel(
-                            heroTag: service.name + service.perHour,
-                            name: service.name,
-                            imagePath: service.imagePath,
-                            location: service.location,
-                            perHour: service.perHour,
-                            rating: service.rating
-                          ),
-                        );
-                      }
-                    ),
+                    child: AnimationLimiter(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: servicesPersonnel.length,
+                          itemBuilder: (context, index) {
+                            var service = servicesPersonnel[index];
+                            return AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: const Duration(milliseconds: 800),
+                              child: SlideAnimation(
+                                horizontalOffset: 500.0,
+                                child: PersonnelCard(
+                                  model: ServicePersonnelModel(
+                                      heroTag: service.name + service.perHour,
+                                      name: service.name,
+                                      imagePath: service.imagePath,
+                                      location: service.location,
+                                      perHour: service.perHour,
+                                      rating: service.rating
+                                  ),
+                                )
+                              )
+                            );
+                          }
+                      ),
+                    )
                   ),
                   const SizedBox(height: 15.0),
                   ScaleTransition(
