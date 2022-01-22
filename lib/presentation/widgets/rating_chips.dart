@@ -19,7 +19,7 @@ class _RatingChipsState extends State<RatingChips> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 1.0, end: 0.0),
-      duration: const Duration(milliseconds: 2800),
+      duration: const Duration(milliseconds: 800),
       child: Card(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25.0)),

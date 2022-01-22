@@ -55,7 +55,7 @@ class _PersonnelProfileViewState extends State<PersonnelProfileView> with Single
     delayedSlideUpAnimation = Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0))
         .animate(CurvedAnimation(
         parent: animationController,
-        curve: const Interval(0.7, 1.0, curve: Curves.easeIn)
+        curve: const Interval(0.2, 1.0, curve: Curves.easeIn)
       )
     );
     super.initState();

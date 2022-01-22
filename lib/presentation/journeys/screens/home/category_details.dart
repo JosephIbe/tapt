@@ -70,7 +70,7 @@ class _CategoryDetailsViewState extends State<CategoryDetailsView> with SingleTi
     ),
   ];
 
-  static const animationDuration = 2800;
+  static const animationDuration = 1800;
   late final animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: animationDuration));
 
   @override

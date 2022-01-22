@@ -23,7 +23,25 @@ class PersonnelCard extends StatefulWidget {
 class _PersonnelCardState extends State<PersonnelCard> {
 
   static const animationDuration = 800;
-  bool isAnimating = false;
+  late bool isAnimating;
+
+  @override
+  void initState() {
+    isAnimating = false;
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    toggleIsAnimating();
+    super.didChangeDependencies();
+  }
+
+  toggleIsAnimating() {
+    setState(()=> {
+      isAnimating = !isAnimating
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +52,9 @@ class _PersonnelCardState extends State<PersonnelCard> {
     var heroTag = widget.model.name[0] + widget.model.perHour;
 
     return InkWell(
+      enableFeedback: true,
       onTap: ()=> {
-        setState(()=> {
-          isAnimating = !isAnimating
-        }),
+        toggleIsAnimating(),
         Future.delayed(
           const Duration(milliseconds: 1200),
           ()=>{
